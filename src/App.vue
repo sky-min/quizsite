@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div v-if="show">
-      <p class="score"><strong>푼 문제수</strong>: {{count}}/{{all}}   <strong>정답 갯수</strong>: {{good}}   <strong>틀린 갯수</strong>: {{bad}}</p>
+      <p class="score"><strong>푼 문제수</strong>: {{count}}/{{all}} | <strong>정답 갯수</strong>: {{good}} | <strong>틀린 갯수</strong>: {{bad}}</p>
       <br />
       <br />
+      <h3>{{qd}}</h3>
       <h2>{{question}}</h2>
       <form v-on:submit="onSubmitForm">
         <input type="text" v-model="value">
@@ -27,7 +28,8 @@ export default {
   data() {
     return {
       show: true,
-      question: this.$Q[0],
+      question: this.$Q[0][0],
+      qd: this.$Q[0][1],
       count: 0,
       all: this.$Q.length,
       good: 0,
@@ -50,13 +52,21 @@ export default {
         this.bad++;
         this.resolve = this.$H[count];
       }
+      setTimeout(function(){
+        this.result = '';
+        this.resolve = '';
+      }.bind(this), 1300);
       this.count++;
       this.value = '';
-      if(count + 1 === this.$Q.length){
-        this.question = '결과 처리중 입니다.'
+      if(this.count === this.all){
+        this.qd = '';
+        this.question = '결과 처리중 입니다.';
         setTimeout(function(){
           this.show = !this.show;
         }.bind(this), 5000);
+      }else{
+        this.question = this.$Q[this.count][0];
+        this.qd = this.$Q[this.count][1];
       }
     }
   }
