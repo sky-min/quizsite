@@ -2,6 +2,8 @@
   <div id="app">
     <div v-if="show">
       <p class="score"><strong>푼 문제수</strong>: {{count}}/{{all}}   <strong>정답 갯수</strong>: {{good}}   <strong>틀린 갯수</strong>: {{bad}}</p>
+      <br />
+      <br />
       <h2>{{question}}</h2>
       <form v-on:submit="onSubmitForm">
         <input type="text" v-model="value">
