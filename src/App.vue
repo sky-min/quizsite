@@ -94,7 +94,7 @@ export default {
 }
 
 .score {
-	color: rgb(164,164,164);
+  color: rgb(164,164,164);
   text-align: right;
 }
 
