@@ -6,6 +6,7 @@
       <br />
       <h3>{{qd}}</h3>
       <h2>{{question}}</h2>
+      <img style="width: 50%;" v-bind:src="image" v-if="imgp" />
       <form v-on:submit="onSubmitForm">
         <input type="text" v-model="value">
         <button>제출</button>
@@ -15,9 +16,18 @@
       <br />
       <p>{{resolve}}</p>
     </div>
-    <div class="success" v-else>
+    <div class="success" v-if="complete">
       <h1><strong class="counter">{{all}}</strong> 문제 중 <strong class="counter">{{good}}</strong> 문제를</h1>
       <h1>맞추셨습니다.</h1>
+      <br />
+      <button v-on:click="onHint">답 모두 보기</button>
+    </div>
+    <div class="hints" v-if="hintlist">
+      <h1>정답</h1>
+      <br />
+      <ol>
+        <li v-for="item in items">{{item}}</li>
+      </ol>
     </div>
   </div>
 </template>
@@ -26,9 +36,15 @@
 export default {
   name: 'app',
   data() {
+    let iif = true;
+    if(this.$I[0] === ''){
+      iif = false;
+    }
     return {
       show: true,
       question: this.$Q[0][0],
+      image: this.$I[0],
+      imgp: iif,
       qd: this.$Q[0][1],
       count: 0,
       all: this.$Q.length,
@@ -37,7 +53,10 @@ export default {
       value: '',
       result: '',
       resolve: '',
-      resultScore: ''
+      resultScore: '',
+      complete: false,
+      hintlist: false,
+      items: this.$H
     }
   },
   methods : {
@@ -61,13 +80,25 @@ export default {
       if(this.count === this.all){
         this.qd = '';
         this.question = '결과 처리중 입니다.';
+        this.imgp = false;
         setTimeout(function(){
           this.show = !this.show;
-        }.bind(this), 5000);
+          this.complete = true;
+        }.bind(this), 3500);
       }else{
         this.question = this.$Q[this.count][0];
         this.qd = this.$Q[this.count][1];
+        let iif = true;
+        if(this.$I[this.count] === ''){
+          iif = false;
+        }
+        this.image = this.$I[this.count];
+        this.imgp = iif;
       }
+    },
+    onHint(){
+      this.complete = false;
+      this.hintlist = true;
     }
   }
 }
@@ -94,11 +125,19 @@ export default {
 }
 
 .score {
-  color: rgb(164,164,164);
+	color: rgb(164,164,164);
   text-align: right;
+}
+
+.hints {
+  text-align: left;
 }
 
 h1, h2 {
   font-weight: normal;
+}
+
+li {
+  margin: 7px;
 }
 </style>

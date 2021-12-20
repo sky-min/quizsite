@@ -3,26 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>quiz</title>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <title>quizsite</title>
     <script>
       function reload() {
         window.onbeforeunload = function (e) {
           return 0;
         };
       }
-
-      window.addEventListener('keydown',function(e){
-        if(e.keyIdentifier=='U+0008'|| e.keyIdentifier=='Backspace'||e.keyCode==8) {
-          if(e.target==document.body){
-            e.preventDefault();
-            return false;
-          }
-        }
-     },true);
     </script>
   </head>
   <body onload="reload()">
     <div id="app"></div>
-    <script src="./dist/build.js"></script>
+    <script src="/dist/build.js"></script>
   </body>
 </html>
